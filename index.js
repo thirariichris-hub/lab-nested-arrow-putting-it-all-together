@@ -20,3 +20,5 @@ function createLoginTracker(userInfo) {
         return `Incorrect password. You have ${maxAttempts - attempts} attempt(s) remaining.`;
     };
 }
+
+module.exports = createLoginTracker;
