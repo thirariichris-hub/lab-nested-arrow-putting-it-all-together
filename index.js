@@ -1,32 +1,36 @@
 function createLoginTracker(userInfo) {
-  // 3. Initialize attempt counter
-  let attemptCount = 0;
+    let attempts = 0;          // private variable
+    const maxAttempts = 3;     // allowed attempts
 
-  // 4. Return nested arrow function
-  return (passwordAttempt) => {
-    // Increase count each time the function is called
-    attemptCount++;
+    // inner arrow function
+    return (passwordAttempt) => {
 
-    // If attempts exceed 3 → lock the account
-    if (attemptCount > 3) {
-      return "Account locked due to too many failed login attempts";
-    }
+        // already locked?
+        if (attempts >= maxAttempts) {
+            return "Account locked. Too many failed login attempts.";
+        }
 
-    // Check if the password is correct
-    if (passwordAttempt === userInfo.password) {
-      return "Login successful";
-    } else {
-      // Failed attempts: 1–3
-      return `Attempt ${attemptCount}: Login failed`;
-    }
-  };
+        // correct password?
+        if (passwordAttempt === userInfo.password) {
+            return "Login successful!";
+        }
+
+        // wrong password → increase attempts
+        attempts++;
+
+        // locked after too many wrong attempts
+        if (attempts >= maxAttempts) {
+            return "Account locked. Too many failed login attempts.";
+        }
+
+        // still has tries remaining
+        return `Incorrect password. You have ${maxAttempts - attempts} attempt(s) remaining.`;
+    };
 }
 // Example usage:
-const user = { username: "student1", password: "pass123" };
+const user = { username: "user1", password: "securePass" };
 const login = createLoginTracker(user);
-
-console.log("Testing login tracker:");
-console.log(login("pass123"));  // Login successful
-console.log(login("wrong"));    // Attempt 2: Login failed
-console.log(login("wrong"));    // Attempt 3: Login failed
-console.log(login("wrong"));  // Account locked due to too many failed login attempts
+console.log(login("wrongpass")); // Incorrect password. You have 2 attempt(s) remaining.
+console.log(login("wrongPass")); // Incorrect password. You have 1 attempt(s) remaining.
+console.log(login("wrongPass")); // Account locked. Too many failed login attempts.
+console.log(login("securePass")); // Still locked. 
