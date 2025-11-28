@@ -4,20 +4,20 @@ function createLoginTracker(userInfo) {
 
     return (passwordAttempt) => {
         if (attempts >= maxAttempts) {
-            return "Account locked. Too many failed login attempts.";
+            return "Account locked due to too many failed login attempts";
         }
 
         if (passwordAttempt === userInfo.password) {
-            return "Login successful!";
+            return "Login successful";
         }
 
         attempts++;
 
         if (attempts >= maxAttempts) {
-            return "Account locked. Too many failed login attempts.";
+            return "Account locked due to too many failed login attempts";
         }
 
-        return `Incorrect password. You have ${maxAttempts - attempts} attempt(s) remaining.`;
+        return `Attempt ${attempts}: Login failed`;
     };
 }
 
