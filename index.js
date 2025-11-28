@@ -1,6 +1,6 @@
 function createLoginTracker(userInfo) {
-    let attempts = 0;          
-    const maxAttempts = 3;     
+    let attempts = 0;
+    const maxAttempts = 3;
 
     return (passwordAttempt) => {
         if (attempts >= maxAttempts) {
@@ -21,4 +21,4 @@ function createLoginTracker(userInfo) {
     };
 }
 
-module.exports = createLoginTracker;
+module.exports = { createLoginTracker };
